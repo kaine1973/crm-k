@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shsxt.crm.dao.UserDao">
+
+    <sql id="Base_Column_List">
+        id, user_name AS userName, user_pwd AS userPwd, true_name AS trueName, phone, email, is_valid AS isValid,
+        create_date AS createDate
+        , update_date AS updateDate
+    </sql>
+
+    <select id="selectUserById" resultType="user" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where id = #{userId}
+    </select>
+
+    <update id="updateUserPwd" parameterType="string">
+        UPDATE t_user
+        SET user_pwd = #{newPwd} , update_date = sysdate()
+        WHERE id = #{userId}
+    </update>
+</mapper>
