@@ -19,11 +19,12 @@ import java.lang.reflect.Method;
 public class GlobalException implements HandlerExceptionResolver {
 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
+       
         ModelAndView mv = createDefaultModelAndView(request);
         ResponseBody responseBody = method.getAnnotation(ResponseBody.class);
         if (handler instanceof HandlerMethod) {
+             HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
             if (e instanceof ParamsException) {
                 ParamsException e1 = (ParamsException) e;
                 if (e1.code.equals(CrmConstant.DEFAULT_ERROR_CODE)) {
