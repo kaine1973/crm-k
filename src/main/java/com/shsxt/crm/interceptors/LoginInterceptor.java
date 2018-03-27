@@ -25,6 +25,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String userId = CookieUtil.getCookieValue(request, "userId");
 
+        if("/".equals(request.getRequestURI())){
+            return true;
+        }
+        
         AssertUtil.isTrue(userId == null, CrmConstant.DEFAULT_ERROR_CODE, "用户未登录");
         userId = EncyptUtil.idDecode(userId);
         User user = userDao.selectUserById(userId);
