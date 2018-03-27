@@ -21,10 +21,9 @@ public class GlobalException implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
        
         ModelAndView mv = createDefaultModelAndView(request);
-
         if (handler instanceof HandlerMethod) {
              HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
+                Method method = handlerMethod.getMethod();
             if (e instanceof ParamsException) {
                 ParamsException e1 = (ParamsException) e;
                 if (e1.code.equals(CrmConstant.DEFAULT_ERROR_CODE)) {
@@ -33,7 +32,8 @@ public class GlobalException implements HandlerExceptionResolver {
                     return mv;
                 }
             }
-        ResponseBody responseBody = method.getAnnotation(ResponseBody.class);
+
+            ResponseBody responseBody = method.getAnnotation(ResponseBody.class);
             if (responseBody != null) {
                 MessageModel mm = new MessageModel();
                 mm.setMsg(CrmConstant.DEFAULT_ERROR_MSG);
